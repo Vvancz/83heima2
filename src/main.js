@@ -2,14 +2,19 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 
+import axios from 'axios'
 // 在main.js中引入 一个index.less此样式文件的意义是 对于全局样式的设置
 import './styles/index.less'
 
 // 引入ElementUI模块 引入样式 并使用
 // 全局注册
 import ElementUI from 'element-ui'
-import 'element-ui/lib/theme-chalk/index.css'// 引入ElementUI样式
+// 引入ElementUI样式
+import 'element-ui/lib/theme-chalk/index.css'
 Vue.use(ElementUI)
+
+Vue.prototype.$axios = axios// 将axios共享给所有实例
+axios.defaults.baseURL = 'http://ttapi.research.itcast.cn/mp/v1_0'
 
 Vue.config.productionTip = false
 
