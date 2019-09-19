@@ -13,8 +13,8 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 Vue.use(ElementUI)
 
-Vue.prototype.$axios = axios// 将axios共享给所有实例
 axios.defaults.baseURL = 'http://ttapi.research.itcast.cn/mp/v1_0'
+Vue.prototype.$axios = axios// 将axios共享给所有实例
 
 Vue.config.productionTip = false
 

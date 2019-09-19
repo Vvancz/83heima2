@@ -95,6 +95,7 @@ export default {
       // 获取对象实例this.$refs.myForm
       // validate 校验整个表单的方法
       this.$refs.myForm.validate((isOk) => {
+        // 只有一切的校验通过之后才会进入这里面
         if (isOk) {
           // console.log('校验成功')
           // 在校验通过之后去请求
@@ -104,11 +105,19 @@ export default {
             method: 'post',
             data: this.loginForm
           }).then(result => {
+            // 请求成功后进入then
             // console.log(result)
             // 将后台返回的token令牌存储到前端缓存中
             window.localStorage.setItem('user-token', result.data.data.token)
-          }).catch(error => {
-            console.log(error.message)
+            // 用编程式导航跳到主页
+            this.$router.push('/home')
+          }).catch(() => {
+            // 失败后提示消息
+            // console.log(error.message)
+            this.$message({
+              type: 'warning',
+              message: '您输入的手机号或验证码错误'
+            })
           })
         }
       })
