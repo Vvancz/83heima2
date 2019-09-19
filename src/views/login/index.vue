@@ -94,9 +94,22 @@ export default {
     login () {
       // 获取对象实例this.$refs.myForm
       // validate 校验整个表单的方法
-      this.$refs.myForm.validate(function (isOk) {
+      this.$refs.myForm.validate((isOk) => {
         if (isOk) {
-          console.log('校验成功')
+          // console.log('校验成功')
+          // 在校验通过之后去请求
+          // 成功进then 失败进catch
+          this.$axios({
+            url: '/authorizations',
+            method: 'post',
+            data: this.loginForm
+          }).then(result => {
+            // console.log(result)
+            // 将后台返回的token令牌存储到前端缓存中
+            window.localStorage.setItem('user-token', result.data.data.token)
+          }).catch(error => {
+            console.log(error.message)
+          })
         }
       })
     }
