@@ -2,7 +2,10 @@
   <!-- 先定义一个大容器 -->
   <el-container>
     <!-- 先放置一个左侧容器 -->
-    <el-aside></el-aside>
+    <el-aside>
+      <!-- 使用左侧导航组件 -->
+      <layout-aside></layout-aside>
+    </el-aside>
     <el-container>
       <!-- 再放置一个右侧容器 -->
       <!-- 头部 -->
@@ -17,7 +20,12 @@
 </template>
 
 <script>
-export default {}
+import layoutAside from '../../components/home/layout-aside'
+export default {
+  components: {
+    'layout-aside': layoutAside
+  }
+}
 </script>
 
 <style>
