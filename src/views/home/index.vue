@@ -22,14 +22,16 @@
 </template>
 
 <script>
-import layoutAside from '../../components/home/layout-aside'
-import layoutHeader from '../../components/home/layout-header'
+// 因为注册了全局的 所以这里可以删掉
+// import layoutAside from '../../components/home/layout-aside'
+// import layoutHeader from '../../components/home/layout-header'
 
 export default {
-  components: {
-    'layout-aside': layoutAside,
-    'layout-header': layoutHeader
-  }
+  // 因为注册了全局的 所以这里可以删掉
+  // components: {
+  //   'layout-aside': layoutAside,
+  //   'layout-header': layoutHeader
+  // }
 }
 </script>
 

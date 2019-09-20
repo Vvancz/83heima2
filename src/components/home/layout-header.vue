@@ -28,22 +28,21 @@ export default {}
 <style lang='less' scoped>
 .layout-header {
   height: 50px;
-//   line-height: 50px;
+  //   line-height: 50px;
   .el-icon-s-unfold {
     font-size: 22px;
     //   vertical-align: middle;
   }
-  .title{
-      margin-left: 4px;
-      vertical-align: top;
-
+  .title {
+    margin-left: 4px;
+    vertical-align: top;
   }
-  .head-img{
-      border-radius: 50%;
-      margin-right: 4px;
-      width: 40px;
-      height: 40px;
-      vertical-align: middle;
+  .head-img {
+    border-radius: 50%;
+    margin-right: 4px;
+    width: 40px;
+    height: 40px;
+    vertical-align: middle;
   }
 }
 </style>
