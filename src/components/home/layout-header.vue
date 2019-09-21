@@ -6,15 +6,15 @@
     </el-col>
     <el-col :span="4">
       <img class="head-img" :src="userInfo.photo?userInfo.photo:defaultImg" alt />
-      <el-dropdown trigger="click">
+      <el-dropdown trigger="click" @command="commomClick">
         <span class="el-dropdown-link">
           {{userInfo.name}}
           <i class="el-icon-arrow-down el-icon--right"></i>
         </span>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item>个人信息</el-dropdown-item>
-          <el-dropdown-item>GitHub地址</el-dropdown-item>
-          <el-dropdown-item>退出</el-dropdown-item>
+          <el-dropdown-item command="account">个人信息</el-dropdown-item>
+          <el-dropdown-item command="git">GitHub地址</el-dropdown-item>
+          <el-dropdown-item command="lgout">退出</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </el-col>
@@ -39,6 +39,19 @@ export default {
         console.log(reuslt)
         this.userInfo = reuslt.data.data
       })
+    },
+    commomClick (key) {
+      if (key === 'account') {
+        // 跳转到个人账户信息
+      } else if (key === 'git') {
+        // 跳转到git
+        window.location.href = 'https://github.com/'
+      } else {
+        // 删除令牌信息
+        window.localStorage.clear()// 清除本项目的所有前端信息
+        // 跳转到登录页
+        this.$router.push('/login')
+      }
     }
   },
   created () {
