@@ -43,10 +43,12 @@ export default {
     commomClick (key) {
       if (key === 'account') {
         // 跳转到个人账户信息
+        this.$router.push('/home/account')
       } else if (key === 'git') {
         // 跳转到git
         window.location.href = 'https://github.com/'
       } else {
+        // 退出
         // 删除令牌信息
         window.localStorage.clear()// 清除本项目的所有前端信息
         // 跳转到登录页
