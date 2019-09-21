@@ -32,7 +32,7 @@
         <el-menu-item index="/home/material">素材管理</el-menu-item>
       </el-submenu>
 
-      <el-submenu>
+      <el-submenu index="/home">
         <template slot="title">
           <i class="el-icon-s-custom"></i>
           <span slot="title">粉丝管理</span>
@@ -59,7 +59,7 @@ export default {}
 
 <style lang="less" scoped>
 .layout-aside {
-  background-color: #323745;
+  // background-color: #323745;
   height: 100vh;
   width: 200px;
   .title {

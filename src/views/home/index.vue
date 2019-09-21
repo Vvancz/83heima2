@@ -2,7 +2,7 @@
   <!-- 先定义一个大容器 -->
   <el-container>
     <!-- 先放置一个左侧容器 -->
-    <el-aside>
+    <el-aside style="width:200px;background-color: #323745;overflow: hidden;">
       <!-- 使用左侧导航组件 -->
       <layout-aside></layout-aside>
     </el-aside>
@@ -13,7 +13,7 @@
         <layout-header></layout-header>
       </el-header>
       <!-- 中部 -->
-      <el-main>
+      <el-main style="padding:0">
         <!-- 中部里面放二级路由容器 -->
         <router-view></router-view>
       </el-main>
@@ -36,4 +36,5 @@ export default {
 </script>
 
 <style>
+
 </style>
