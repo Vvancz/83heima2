@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
-import router from './router'
+import router from './permission'
 
 // 引入全局注册的组件文件
 import Component from './components/index'
