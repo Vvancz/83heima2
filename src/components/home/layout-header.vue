@@ -37,7 +37,7 @@ export default {
         // headers: { Authorization: `Bearer ${token}` }
       }).then(reuslt => {
         console.log(reuslt)
-        this.userInfo = reuslt.data.data
+        this.userInfo = reuslt.data
       })
     },
     commomClick (key) {

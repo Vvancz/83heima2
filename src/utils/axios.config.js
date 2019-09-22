@@ -5,6 +5,8 @@ import axios from 'axios'
 // 将地址的常态值配置给baseURL
 axios.defaults.baseURL = 'http://ttapi.research.itcast.cn/mp/v1_0'
 
+// 请求拦截 请求到达后台之前拦截 并统一注入token
+
 axios.interceptors.request.use(function (config) {
   // 获取token
   let token = window.localStorage.getItem('user-token') // 获取token
@@ -14,6 +16,14 @@ axios.interceptors.request.use(function (config) {
 }, function (error) {
   // 对请求失败做处理
 
+  return Promise.reject(error)
+})
+
+// 响应拦截 响应数据回来到达then方法之前拦截
+
+axios.interceptors.response.use(function (response) {
+  return response.data ? response.data : {}
+}, function (error) {
   return Promise.reject(error)
 })
 
