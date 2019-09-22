@@ -111,13 +111,6 @@ export default {
             window.localStorage.setItem('user-token', result.data.token)
             // 用编程式导航跳到主页
             this.$router.push('/home')
-          }).catch(() => {
-            // 失败后提示消息
-            // console.log(error.message)
-            this.$message({
-              type: 'warning',
-              message: '您输入的手机号或验证码错误'
-            })
           })
         }
       })
