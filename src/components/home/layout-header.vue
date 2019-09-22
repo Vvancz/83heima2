@@ -31,10 +31,10 @@ export default {
   },
   methods: {
     getuserInfo () {
-      let token = window.localStorage.getItem('user-token')
+      // let token = window.localStorage.getItem('user-token')
       this.$axios({
-        url: '/user/profile',
-        headers: { Authorization: `Bearer ${token}` }
+        url: '/user/profile'
+        // headers: { Authorization: `Bearer ${token}` }
       }).then(reuslt => {
         console.log(reuslt)
         this.userInfo = reuslt.data.data
