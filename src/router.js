@@ -4,6 +4,7 @@ import Router from 'vue-router'
 import Home from './views/home/' // 路由级组件
 
 import Main from './views/home/main.vue'
+
 import Login from './views/login/index.vue'
 Vue.use(Router)
 
@@ -19,7 +20,10 @@ export default new Router({
       path: '/home',
       component: Home,
       children: [
-        { path: '', component: Main }
+        { path: '', component: Main },
+        // component 是按需加载
+        // 这里comment不能加/ 如果加了就是从根目录开始
+        { path: 'comment', component: () => import('./views/comment/index.vue') }
       ]
     },
     {
