@@ -20,6 +20,7 @@
             size="small"
             type="text"
             @click="openOrclose(obj.row)"
+            :style="{color:obj.row.comment_status?'#E6A23C':'#409EFF'}"
           >{{obj.row.comment_status ? '关闭评论' :'打开评论'}}</el-button>
         </template>
       </el-table-column>
@@ -43,7 +44,7 @@ export default {
         this.$axios({
           url: '/comments/status',
           method: 'put',
-          params: { article_id: row.id }, // 路径参数
+          params: { article_id: row.id.toString() }, // 路径参数
           data: { allow_comment: !row.comment_status } // body参数 调用状态和当前状态是反着的  所以要取反
         }).then(() => {
           // 成功一定会进入then

@@ -4,6 +4,11 @@
 import axios from 'axios'
 import { Message } from 'element-ui'
 import router from '../permission'
+import jsonBig from 'json-bigint'
+axios.defaults.transformResponse = [function (data) {
+  return jsonBig.parse(data)
+}]
+
 // 将地址的常态值配置给baseURL
 axios.defaults.baseURL = 'http://ttapi.research.itcast.cn/mp/v1_0'
 
