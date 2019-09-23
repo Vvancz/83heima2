@@ -9,14 +9,13 @@
         <!-- 表格 -->
         <el-table :data="list">
             <el-table-column prop="title" label="标题" width="600px"></el-table-column>
-            <el-table-column align="center" prop="comment_status" label="评论状态">
-              <span></span>
+            <el-table-column :formatter="formatter" align="center" prop="comment_status" label="评论状态">
             </el-table-column>
             <el-table-column align="center" prop="total_comment_count" label="总评论数"></el-table-column>
             <el-table-column align="center" prop="fans_comment_count" label="粉丝评论数"></el-table-column>
             <el-table-column align="center" label="操作">
-              <span>修改</span>
-              <span>打开评论</span>
+              <el-button size="small" type="text">修改</el-button>
+              <el-button size="small" type="text">打开评论</el-button>
             </el-table-column>
 
         </el-table>
@@ -40,6 +39,9 @@ export default {
         // 把返回的数据赋值给list
         this.list = result.data.results
       })
+    },
+    formatter (row, column, cellvalue, index) {
+      return cellvalue ? '正常' : '关闭'
     }
   },
   created () {
