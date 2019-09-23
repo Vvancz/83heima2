@@ -6,12 +6,45 @@
         <!-- slot="title"是给面包屑的 -->
             <template slot="title">评论列表</template>
         </bread-crumb>
+        <!-- 表格 -->
+        <el-table :data="list">
+            <el-table-column prop="title" label="标题" width="600px"></el-table-column>
+            <el-table-column align="center" prop="comment_status" label="评论状态">
+              <span></span>
+            </el-table-column>
+            <el-table-column align="center" prop="total_comment_count" label="总评论数"></el-table-column>
+            <el-table-column align="center" prop="fans_comment_count" label="粉丝评论数"></el-table-column>
+            <el-table-column align="center" label="操作">
+              <span>修改</span>
+              <span>打开评论</span>
+            </el-table-column>
+
+        </el-table>
     </el-card>
 </template>
 
 <script>
 export default {
-
+  data () {
+    return {
+      list: []
+    }
+  },
+  methods: {
+    getComment () {
+      this.$axios({
+        url: '/articles',
+        // params是路径参数也是query参数
+        params: { response_type: 'comment' }
+      }).then(result => {
+        // 把返回的数据赋值给list
+        this.list = result.data.results
+      })
+    }
+  },
+  created () {
+    this.getComment()
+  }
 }
 </script>
 
