@@ -1,5 +1,5 @@
 <template>
-  <el-card>
+  <el-card v-loading="loading">
     <!-- 面包屑组件 -->
     <!-- slot="header"是给 el-card-->
     <bread-crumb slot="header">
@@ -41,7 +41,8 @@ export default {
         total: 0,
         currentPage: 1,
         pageSize: 10
-      }
+      },
+      loading: false
     }
   },
   methods: {
@@ -62,6 +63,7 @@ export default {
       })
     },
     getComment () {
+      this.loading = true // 显示遮罩
       this.$axios({
         url: '/articles',
         // params是路径参数也是query参数
@@ -71,6 +73,8 @@ export default {
         this.list = result.data.results
         // 把总条数  给分页组件的总条数
         this.page.total = result.data.total_count
+        // 关闭遮罩
+        this.loading = false
       })
     },
     formatter (row, column, cellvalue, index) {
