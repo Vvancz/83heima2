@@ -23,7 +23,9 @@ export default new Router({
         { path: '', component: Main },
         // component 是按需加载
         // 这里comment不能加/ 如果加了就是从根目录开始
-        { path: 'comment', component: () => import('./views/comment/index.vue') }
+        { path: 'comment', component: () => import('./views/comment/index.vue') },
+        { path: 'material', component: () => import('./views/material/index.vue') }
+
       ]
     },
     {
