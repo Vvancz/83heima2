@@ -25,6 +25,10 @@
         </template>
       </el-table-column>
     </el-table>
+    <!-- 分页组件 -->
+    <el-row type="flex" justify="center" style="margin-top:20px">
+      <el-pagination background layout="prev, pager, next" @current-change="changePage" :total="page.total" :current-page="page.currentPage" :page-size="page.pageSize"></el-pagination>
+    </el-row>
   </el-card>
 </template>
 
@@ -32,7 +36,12 @@
 export default {
   data () {
     return {
-      list: []
+      list: [],
+      page: {
+        total: 0,
+        currentPage: 1,
+        pageSize: 10
+      }
     }
   },
   methods: {
@@ -49,22 +58,27 @@ export default {
         }).then(() => {
           // 成功一定会进入then
           this.getComment()
-        }
-        )
+        })
       })
     },
     getComment () {
       this.$axios({
         url: '/articles',
         // params是路径参数也是query参数
-        params: { response_type: 'comment' }
+        params: { response_type: 'comment', page: this.page.currentPage, per_page: this.page.pageSize }
       }).then(result => {
         // 把返回的数据赋值给list
         this.list = result.data.results
+        // 把总条数  给分页组件的总条数
+        this.page.total = result.data.total_count
       })
     },
     formatter (row, column, cellvalue, index) {
       return cellvalue ? '正常' : '关闭'
+    },
+    changePage (newPage) {
+      this.page.currentPage = newPage
+      this.getComment()
     }
   },
   created () {
