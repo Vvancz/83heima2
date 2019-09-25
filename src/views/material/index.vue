@@ -5,6 +5,19 @@
       <template slot="title">素材管理</template>
     </bread-crumb>
 
+    <!-- 上传 -->
+    <!--  http-request 自定义上传 -->
+    <!-- <el-upload
+      class="upload-pic"
+      action=""
+      :show-file-list="false"
+      :http-request="uploadImg">
+      <el-button size="small" type="primary">点击上传</el-button>
+    </el-upload> -->
+    <el-upload class="upload-pic" action="" :http-request="uploadImg" :show-file-list="false">
+      <el-button type="primary"> 上传图片 </el-button>
+    </el-upload>
+
     <!-- tabs栏 -->
     <template>
       <el-tabs v-model="activeName" @tab-click="changeTab">
@@ -62,6 +75,26 @@ export default {
     }
   },
   methods: {
+    // 上传图片 方法
+    uploadImg (params) {
+      // 声明一个表单
+      const data = new FormData()
+      // 往表单里加数据
+      data.append('image', params.file)
+      // 调用上传图片 素材接口
+      this.$axios({
+        url: '/user/images',
+        method: 'post',
+        // 这里传的是表单数据
+        data
+      }).then(() => {
+        this.getMaterial()
+        this.$message({
+          message: '图片上传成功',
+          type: 'success'
+        })
+      })
+    },
     // 切换页签方法
     changeTab () {
       this.page.currentPage = 1 // 当页签切换时回到 数据的第一页
@@ -107,6 +140,13 @@ export default {
 </script>
 
 <style lang='less' scoped>
+.upload-pic{
+  position: absolute;
+  right: 30px;
+  margin-top: -10px;
+  z-index: 1;
+  // cursor: pointer;
+}
 .list-img {
   display: flex;
   flex-wrap: wrap;
