@@ -6,7 +6,7 @@ import { Message } from 'element-ui'
 import router from '../permission'
 import jsonBig from 'json-bigint'
 axios.defaults.transformResponse = [function (data) {
-  return jsonBig.parse(data)
+  return data ? jsonBig.parse(data) : {}
 }]
 
 // 将地址的常态值配置给baseURL
@@ -31,8 +31,15 @@ axios.interceptors.request.use(function (config) {
 axios.interceptors.response.use(function (response) {
   return response.data ? response.data : {}
 }, function (error) {
+  // console.log(error)
   //   return Promise.reject(error)
   let status = error.response.status // 获取失败状态码
+  // var status
+  // if (error.response) {
+  //   status = error.response.status
+  // } else {
+  //   status = ''
+  // }
   let message = '未知错误'
 
   switch (status) {
@@ -60,7 +67,7 @@ axios.interceptors.response.use(function (response) {
     default:
       break
   }
-  Message({ message })
+  Message({ message, type: 'warning' })
   //   希望在异常处理函数中将所有的错误都处理完毕  不再进入catch 终止错误
   return new Promise(function () {}) // 终止当前的错误
 })

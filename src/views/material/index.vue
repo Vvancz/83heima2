@@ -29,8 +29,10 @@
                 <i
                   :style="{color: item.is_collected ? 'red':'#black'}"
                   class="el-icon-star-on right"
+                  @click="collectOrCancelImg(item)"
                 ></i>
-                <i class="el-icon-delete-solid left"></i>
+                <!-- 删除 传入id -->
+                <i class="el-icon-delete-solid left" @click="deleteImg(item.id)"></i>
               </div>
             </el-card>
           </div>
@@ -75,6 +77,36 @@ export default {
     }
   },
   methods: {
+    // 点击收藏图片
+    collectOrCancelImg (item) {
+      let mess = item.is_collected ? '取消收藏' : '收藏'
+      this.$confirm(`您确定要${mess}该图片吗？`).then(() => {
+        this.$axios({
+          url: `/user/images/${item.id}`,
+          method: 'put',
+          data: { collect: !item.is_collected }
+        }).then(() => {
+          this.getMaterial()
+        })
+      })
+    },
+    // 删除图片素材
+    deleteImg (id) {
+      // 先询问是否要删除
+      // 相当于promise对象  一但成功进then 相当于resolve 失败进catch 相当于reject
+      this.$confirm('您确定要删除该图片吗？').then(() => {
+        // 这里要用箭头函数  因为想让this指向vue实例
+        // 如果点击了确定要进入then  点击了取消不用管
+        // 点击后调用删除接口
+        this.$axios({
+          url: `/user/images/${id}`,
+          method: 'delete'
+        // params: { target: id }
+        }).then(() => {
+          this.getMaterial()
+        })
+      })
+    },
     // 上传图片 方法
     uploadImg (params) {
       // 声明一个表单
@@ -145,7 +177,7 @@ export default {
   right: 30px;
   margin-top: -10px;
   z-index: 1;
-  // cursor: pointer;
+  //
 }
 .list-img {
   display: flex;
@@ -173,6 +205,9 @@ export default {
       background-color: #f4f5f6;
       height: 30px;
       width: 100%;
+      i{
+        cursor: pointer;
+      }
     }
   }
 }
