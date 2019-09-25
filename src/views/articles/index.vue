@@ -7,7 +7,7 @@
 
     <!-- 搜索框 实际上是表单组成的 -->
     <el-form style="margin-left:50px">
-        <!-- 文章状态 -->
+      <!-- 文章状态 -->
       <el-form-item label="文章状态 :">
         <el-radio-group v-model="radio">
           <el-radio :label="3">全部</el-radio>
@@ -18,7 +18,7 @@
         </el-radio-group>
       </el-form-item>
 
-        <!-- 频道列表 -->
+      <!-- 频道列表 -->
       <el-form-item label="频道列表 :">
         <el-select v-model="value" placeholder="请选择">
           <el-option
@@ -30,7 +30,7 @@
         </el-select>
       </el-form-item>
 
-        <!-- 时间选择 -->
+      <!-- 时间选择 -->
       <el-form-item label="时间选择 :">
         <div class="block">
           <el-date-picker
@@ -49,22 +49,24 @@
     <div class="total">共找到{{page.total}}条符合条件的内容</div>
     <!-- 布局 -->
     <div class="artcles-item" v-for="item in list" :key="item.id">
-        <!-- 左侧 -->
-        <div class="left">
-            <img :src="item.cover.images.length?item.cover.images[0]:defaultImg " alt="">
-            <div class="info">
-                <span class="title">{{item.title}}</span>
-                <el-tag class="status" type="item.status"></el-tag>
-                <span class="date">{{item.pubdate}}</span>
-
-            </div>
+      <!-- 左侧 -->
+      <div class="left">
+        <img :src="item.cover.images.length?item.cover.images[0]:defaultImg " alt />
+        <div class="info">
+          <span class="title">{{item.title}}</span>
+          <el-tag class="status" :type="item.status|statusType">{{item.status|statusText}}</el-tag>
+          <span class="date">{{item.pubdate}}</span>
         </div>
-        <!-- 右侧 -->
-        <div class="right">
-            <span class="first"><i class="el-icon-edit "></i>修改</span>
-            <span><i class="el-icon-delete"></i>删除</span>
-
-        </div>
+      </div>
+      <!-- 右侧 -->
+      <div class="right">
+        <span class="first">
+          <i class="el-icon-edit"></i>修改
+        </span>
+        <span>
+          <i class="el-icon-delete"></i>删除
+        </span>
+      </div>
     </div>
 
     <!-- 分页组件 -->
@@ -75,8 +77,8 @@
         :total="page.total"
         :page-size="page.pageSize"
         :current-page="page.currentPage"
-        @current-change="changePage">
-      </el-pagination>
+        @current-change="changePage"
+      ></el-pagination>
     </el-row>
   </el-card>
 </template>
@@ -116,54 +118,88 @@ export default {
   },
   created () {
     this.getArticles()
+  },
+  filters: {
+    //   定义一个过滤器
+    // 过滤器的第一个参数 永远是前面传过来的值
+
+    statusText (value) {
+      switch (value) {
+        case 0:
+          return '草稿'
+        case 1:
+          return '待审核'
+        case 2:
+          return '审核通过'
+        case 3:
+          return '审核失败'
+        case 4:
+          return '已删除'
+      }
+    },
+    // 处理状态的显示样式
+    statusType (value) {
+      switch (value) {
+        case 0:
+          return 'warning'
+        case 1:
+          return 'info'
+        case 2:
+          return 'success'
+        case 3:
+          return 'danger'
+        case 4:
+          return 'danger'
+      }
+    }
   }
 }
 </script>
 
 <style lang='less' scoped>
-    .total{
-        border-bottom: 1px dashed #ccc;
-        height: 50px;
-        line-height: 50px;
+.total {
+  border-bottom: 1px dashed #ccc;
+  height: 50px;
+  line-height: 50px;
+}
+.artcles-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 10px;
+  border-bottom: 1px solid #f2f3f5;
+  .left {
+    display: flex;
+    img {
+      width: 180px;
+      height: 130px;
+      border-radius: 4px;
     }
-    .artcles-item {
-        display: flex;
-        justify-content: space-between;
-        padding: 20px 10px;
-        border-bottom: 1px solid #f2f3f5;
-        .left{
-            display: flex;
-            img {
-                width: 180px;
-                height: 130px;
-                border-radius: 4px;
-            }
-            .info{
-                height: 130px;
-                display: flex;
-                justify-content: space-around;
-                flex-direction: column;
-                margin-left: 10px;
-                .date {
-                color:#999;
-                font-size:12px;
-                }
-                .title{
-                    font-size: 14px;
-                }
-                .status{
-                    width: 70px;
-                    text-align: center;
-                }
-            }
-        }
-        .right{
-            font-size: 12px;
-            margin-right: 8px;
-            cursor: pointer;
-            .first{
-                padding-right: 10px;
-            }
-        }
+    .info {
+      height: 130px;
+      display: flex;
+      justify-content: space-around;
+      flex-direction: column;
+      margin-left: 10px;
+      .date {
+        color: #999;
+        font-size: 12px;
+      }
+      .title {
+        font-size: 14px;
+      }
+      .status {
+        width: 70px;
+        text-align: center;
+      }
     }
+  }
+  .right {
+    font-size: 12px;
+    margin-right: 8px;
+    cursor: pointer;
+    .first {
+      padding-right: 10px;
+    }
+  }
+}
 </style>
