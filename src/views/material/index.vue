@@ -7,7 +7,7 @@
 
     <!-- tabs栏 -->
     <template>
-      <el-tabs v-model="activeName" @tab-click="getMaterial">
+      <el-tabs v-model="activeName" @tab-click="changeTab">
         <el-tab-pane label="全部素材" name="all">
           <div class="list-img">
             <el-card class="item-img" v-for="item in list" :key="item.id">
@@ -31,6 +31,19 @@
         </el-tab-pane>
       </el-tabs>
     </template>
+
+    <!-- 分页组件 -->
+    <el-row type="flex" justify="center">
+      <el-pagination
+        background
+        layout="prev, pager, next"
+        :total="page.total"
+        :page-size="page.pageSize"
+        :current-page="page.currentPage"
+        @current-change="changePage">
+      </el-pagination>
+    </el-row>
+
   </el-card>
 </template>
 
@@ -39,19 +52,38 @@ export default {
   data () {
     return {
       activeName: 'all', // 默认选中全部
-      list: []
+      list: [], // 定义一个list接受数据
+      // 定义一个page对象 专门存放分页信息
+      page: {
+        total: 0,
+        currentPage: 1,
+        pageSize: 10
+      }
     }
   },
   methods: {
+    // 切换页签方法
+    changeTab () {
+      this.page.currentPage = 1 // 当页签切换时回到 数据的第一页
+      this.getMaterial() // 向页面渲染数据重新加载
+    },
+    // 页码改变事件
+    // newPage 是回调参数 当前页
+    changePage (newPage) {
+      this.page.currentPage = newPage // 获取当前页并赋值 将最新页码给currentPage
+      this.getMaterial() // 重新渲染页面 获取最新数据
+    },
+    // 获取素材列表
     getMaterial () {
       this.$axios({
         url: '/user/images',
         // this.activeName === 'collect' 相当于去找收藏的数据
         // 如果不等相当于去找全部的数据
         // 第三种方法：
-        params: { collect: this.activeName === 'collect' }
+        params: { collect: this.activeName === 'collect', page: this.page.currentPage, per_page: this.page.pageSize }
       }).then(result => {
         this.list = result.data.results
+        this.page.total = result.data.total_count// 获取总条数 并赋值总条数
       })
     }
     // handleClick () {
