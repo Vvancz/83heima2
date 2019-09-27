@@ -26,7 +26,8 @@ export default new Router({
         // 这里comment不能加/ 如果加了就是从根目录开始
         { path: 'comment', component: () => import('./views/comment/index.vue') },
         { path: 'material', component: () => import('./views/material/index.vue') },
-        { path: 'articles', component: () => import('./views/articles/index.vue') }
+        { path: 'articles', component: () => import('./views/articles/index.vue') },
+        { path: 'publish', component: () => import('./views/publish/index.vue') }
 
       ]
     },
